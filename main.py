@@ -1,6 +1,5 @@
 import re
 
-
 class Fuel:
     def __init__(self, data):
         self.name = re.findall(r'"(.*?)"', data)[0]
@@ -43,11 +42,14 @@ class MakeFuelList:
 
 
 
+
 if __name__ == '__main__':
     with open("data.txt", "r") as f:
         data = f.readlines()
 
     fuel_list = MakeFuelList(data)
     fuel_list.print_fuel_list()
-    print(fuel_list.find_most_sellable("DT"))
+
+    print(fuel_list.find_most_sellable("92"))
+
 
