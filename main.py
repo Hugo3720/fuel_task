@@ -1,5 +1,4 @@
 import re
-from collections import Counter
 
 class Fuel:
     def __init__(self, data):
@@ -21,18 +20,25 @@ class MakeFuelList:
     def print_fuel_list(self):
         for item in self.fuel_list:
             print(item)
+
     def find_most_sellable(self, name):
-        dates = [fuel.date for fuel in self.fuel_list if fuel.name == name]
+        dict_date = dict()
+        max_count = 0
+        max_date = ""
+        for fuel in self.fuel_list:
+            if fuel.name == name:
+                try:
+                    count = dict_date[fuel.date]
+                    dict_date[fuel.date] = count + 1
+                except:
+                    dict_date.update({fuel.date: 1})
 
-        # Используем Counter для подсчета количества продаж по датам
-        date_counts = Counter(dates)
+                if dict_date[fuel.date] > max_count:
+                    max_count = dict_date[fuel.date]
+                    max_date = fuel.date
 
-        # Находим дату с максимальным количеством продаж
-        if date_counts:
-            max_date = date_counts.most_common(1)[0]  # Получаем дату с максимальным количеством
-            return max_date [0]
-        else:
-            return None
+        return max_date
+
 
 
 
@@ -43,4 +49,7 @@ if __name__ == '__main__':
 
     fuel_list = MakeFuelList(data)
     fuel_list.print_fuel_list()
+
     print(fuel_list.find_most_sellable("92"))
+
+
